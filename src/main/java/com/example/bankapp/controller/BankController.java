@@ -18,6 +18,7 @@ public class BankController {
     @Autowired
     private AccountService accountService;
 
+    //BankController.java
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -26,6 +27,12 @@ public class BankController {
         return "dashboard";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    //BankController.java
     @GetMapping("/register")
     public String showRegistrationForm() {
         return "register";
@@ -42,11 +49,7 @@ public class BankController {
         }
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
+    // BankController.java
     @PostMapping("/deposit")
     public String deposit(@RequestParam BigDecimal amount) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -55,6 +58,7 @@ public class BankController {
         return "redirect:/dashboard";
     }
 
+    // BankController.java
     @PostMapping("/withdraw")
     public String withdraw(@RequestParam BigDecimal amount, Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -71,6 +75,7 @@ public class BankController {
         return "redirect:/dashboard";
     }
 
+    // BankController.java
     @GetMapping("/transactions")
     public String transactionHistory(Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -79,6 +84,7 @@ public class BankController {
         return "transactions";
     }
 
+    // BankController.java
     @PostMapping("/transfer")
     public String transferAmount(@RequestParam String toUsername, @RequestParam BigDecimal amount, Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();

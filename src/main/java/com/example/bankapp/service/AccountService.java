@@ -35,6 +35,7 @@ public class AccountService implements UserDetailsService {
         return accountRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("Account not found"));
     }
 
+    //AccountService.java
     public Account registerAccount(String username, String password) {
         if (accountRepository.findByUsername(username).isPresent()) {
             throw new RuntimeException("Username already exists");
@@ -42,12 +43,12 @@ public class AccountService implements UserDetailsService {
 
         Account account = new Account();
         account.setUsername(username);
-        account.setPassword(passwordEncoder.encode(password)); // Encrypt password
-        account.setBalance(BigDecimal.ZERO); // Initial balance set to 0
+        account.setPassword(passwordEncoder.encode(password));
+        account.setBalance(BigDecimal.ZERO);
         return accountRepository.save(account);
     }
 
-
+    // AccountService.java
     public void deposit(Account account, BigDecimal amount) {
         account.setBalance(account.getBalance().add(amount));
         accountRepository.save(account);
@@ -61,6 +62,7 @@ public class AccountService implements UserDetailsService {
         transactionRepository.save(transaction);
     }
 
+    // AccountService.java
     public void withdraw(Account account, BigDecimal amount) {
         if (account.getBalance().compareTo(amount) < 0) {
             throw new RuntimeException("Insufficient funds");
@@ -77,6 +79,7 @@ public class AccountService implements UserDetailsService {
         transactionRepository.save(transaction);
     }
 
+    // AccountService.java
     public List<Transaction> getTransactionHistory(Account account) {
         return transactionRepository.findByAccountId(account.getId());
     }
@@ -100,6 +103,7 @@ public class AccountService implements UserDetailsService {
         return Arrays.asList(new SimpleGrantedAuthority("USER"));
     }
 
+    // AccountService.java
     public void transferAmount(Account fromAccount, String toUsername, BigDecimal amount) {
         if (fromAccount.getBalance().compareTo(amount) < 0) {
             throw new RuntimeException("Insufficient funds");
